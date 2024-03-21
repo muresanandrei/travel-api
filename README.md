@@ -27,7 +27,8 @@ Check the .env.example i copied my own keys you can follow that structure
 6. To run the backend you can use php artisan serve
 
 ## Lint
-To run duster and check all files: ./vendor/bin/duster lint
+To run duster and check all files: ./vendor/bin/duster lint 
+<!--  -->
 To fix entire codebase: ./vendor/bin/duster fix
 
 ## ROLES
@@ -37,13 +38,15 @@ Roles are done using Gate and the user access methods are located in Providers\A
 Migrations will generate 2 users:
 
 admin@travel.com (admin) password: 12345678
+
 editor@travel.com (editor) password: 12345678
 
 ## API Endpoints
 This document outlines the structure and functionality of the API routes available in this project.
-Protected Routes
+
 
 Protected routes require authentication using Sanctum.
+
 Editor Endpoints
 
 These endpoints are accessible to editors and allow for updating travel information.
@@ -88,7 +91,7 @@ The following route handles user logout.
 
     POST /logout
         User logout endpoint.
-        
+
 
 ## POSTMAN 
 There is also a postman collection that contains all the endpoints and are ready to use with fields completed and automatically saving auth token without needing manual copy.
