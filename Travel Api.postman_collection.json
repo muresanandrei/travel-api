@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "488ba161-8f1d-4514-b448-f749c006fbdf",
+		"name": "Travel Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1836388",
+		"_collection_link": "https://winter-comet-328054.postman.co/workspace/My-Workspace~0017bf2b-2624-4e49-8e46-f37891631624/collection/1836388-488ba161-8f1d-4514-b448-f749c006fbdf?action=share&source=collection_link&creator=1836388"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Ensure responseBody variable is declared only once",
+							"if (typeof responseBody === 'undefined') {",
+							"    // Parse the response body as JSON",
+							"    const responseBody = pm.response.json();",
+							"}",
+							"",
+							"// Extract the token from the response",
+							"const token = JSON.parse(responseBody).token;",
+							"",
+							"// Set the token in the environment variable",
+							"pm.collectionVariables.set('accessToken', token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "editor@travel.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Travel",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {},
+				"followOriginalHttpMethod": false,
+				"disableCookies": false,
+				"followAuthorizationHeader": true,
+				"disableUrlEncoding": false
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "",
+						"type": "text"
+					},
+					{
+						"key": "Access-Control-Allow-Credentials",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "credentials",
+						"value": "same-origin",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Jordan 360 878787",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Jordan 360°: the perfect tour to discover the suggestive Wadi Rum desert, the ancient beauty of Petra, and much more.\\n\\nVisiting Jordan is one of the most fascinating things that everyone has to do once in their life.You are probably wondering \\\"Why?\\\". Well, that's easy: because this country keeps several passions! During our tour in Jordan, you can range from well-preserved archaeological masterpieces to trekkings, from natural wonders excursions to ancient historical sites, from camels trek in the desert to some time to relax.\\nDo not forget to float in the Dead Sea and enjoy mineral-rich mud baths, it's one of the most peculiar attractions. It will be a tour like no other: this beautiful country leaves a memorable impression on everyone.",
+							"type": "text"
+						},
+						{
+							"key": "numberOfDays",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "moods['nature']",
+							"value": "80",
+							"type": "text"
+						},
+						{
+							"key": "moods['relax']",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "moods['history']",
+							"value": "90",
+							"type": "text"
+						},
+						{
+							"key": "moods['culture']",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "moods['party']",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "isPublic",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/admin/travel/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin",
+						"travel",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Tour",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Tour test",
+							"type": "text"
+						},
+						{
+							"key": "startDate",
+							"value": "2024-03-30",
+							"type": "text"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-04-20",
+							"type": "text"
+						},
+						{
+							"key": "price",
+							"value": "99900",
+							"type": "text"
+						},
+						{
+							"key": "travelId",
+							"value": "d408be33-aa6a-4c73-a2c8-58a70ab2ba4d",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/admin/tour/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"admin",
+						"tour",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Travel Update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Jordan 360 878787",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Jordan 360°: the perfect tour to discover the suggestive Wadi Rum desert, the ancient beauty of Petra, and much more.\\n\\nVisiting Jordan is one of the most fascinating things that everyone has to do once in their life.You are probably wondering \\\"Why?\\\". Well, that's easy: because this country keeps several passions! During our tour in Jordan, you can range from well-preserved archaeological masterpieces to trekkings, from natural wonders excursions to ancient historical sites, from camels trek in the desert to some time to relax.\\nDo not forget to float in the Dead Sea and enjoy mineral-rich mud baths, it's one of the most peculiar attractions. It will be a tour like no other: this beautiful country leaves a memorable impression on everyone.",
+							"type": "text"
+						},
+						{
+							"key": "numberOfDays",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "moods['nature']",
+							"value": "80",
+							"type": "text"
+						},
+						{
+							"key": "moods['relax']",
+							"value": "20",
+							"type": "text"
+						},
+						{
+							"key": "moods['history']",
+							"value": "90",
+							"type": "text"
+						},
+						{
+							"key": "moods['culture']",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "moods['party']",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "isPublic",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/editor/travel/d408be33-aa6a-4c73-a2c8-58a70ab2ba4d/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"editor",
+						"travel",
+						"d408be33-aa6a-4c73-a2c8-58a70ab2ba4d",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tours",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "slug",
+							"value": "d408be33-aa6a-4c73-a2c8-58a70ab2ba4d",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/tours?slug=jordan-360&priceTo=100003&dateFrom=2021-01-01&dateTo=2026-05-05&priceFrom=10&sortByPrice=DESC",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"tours"
+					],
+					"query": [
+						{
+							"key": "slug",
+							"value": "jordan-360"
+						},
+						{
+							"key": "priceTo",
+							"value": "100003"
+						},
+						{
+							"key": "dateFrom",
+							"value": "2021-01-01"
+						},
+						{
+							"key": "dateTo",
+							"value": "2026-05-05"
+						},
+						{
+							"key": "priceFrom",
+							"value": "10"
+						},
+						{
+							"key": "sortByPrice",
+							"value": "DESC"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{accessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.sendRequest({",
+					"    url: 'http://localhost:8000/sanctum/csrf-cookie',",
+					"    method: 'GET'",
+					"}, function (error, response) {",
+					"    if (error) {",
+					"        console.error('Error occurred while fetching CSRF cookie:', error);",
+					"        return;",
+					"    }",
+					"",
+					"    if (response && response.cookies) {",
+					"        pm.environment.set('xsrf-token', response.cookies.get('XSRF-TOKEN'));",
+					"    } else {",
+					"        console.error('Response object or cookies are undefined.');",
+					"    }",
+					"});",
+					"",
+					"const jar = pm.cookies.jar();",
+					"",
+					"jar.get(\"http://localhost:8000\", \"XSRF-TOKEN\", (err, cookie) => {",
+					"    if (err) {",
+					"        console.error('Error occurred while fetching XSRF-TOKEN cookie:', err);",
+					"        return;",
+					"    }",
+					"",
+					"    if (cookie) {",
+					"        pm.request.addHeader({",
+					"            key: \"X-XSRF-TOKEN\",",
+					"            value: cookie",
+					"        });",
+					"        pm.request.addHeader({",
+					"            key: \"Access-Control-Allow-Credentials\",",
+					"            value: true",
+					"        });",
+					"    } else {",
+					"        console.error('XSRF-TOKEN cookie is undefined.');",
+					"    }",
+					"});"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

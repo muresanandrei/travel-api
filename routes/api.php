@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //Tours
 Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
-    Route::get('tours', 'ToursController@index');
+    Route::get('tours', 'ToursController@index')->name('api.tours.index');
 });
 
 //Auth Routes

@@ -24,7 +24,7 @@ use Illuminate\Support\Str;
  */
 class Travel extends Model
 {
-    use HasUuids, HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * The name of the "created at" column.
@@ -52,7 +52,7 @@ class Travel extends Model
     protected $fillable = ['isPublic', 'slug', 'name', 'description', 'numberOfDays', 'moods'];
 
     protected $casts = [
-        'moods' => 'json',
+        'moods' => 'array',
     ];
 
     protected static function boot()

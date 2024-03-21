@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tour extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
 
     /**
      * The name of the "created at" column.
@@ -39,24 +40,30 @@ class Tour extends Model
         return $this->belongsTo(Travel::class, 'travelId', 'id');
     }
 
-    public function getPaginatedToursByTravelSlug($filters, $paginate = 10)
+    /**
+     * Get paginated tours by travel slug
+     *
+     * @param  array  $filters
+     * @param  int  $paginate
+     */
+    public function getPaginatedToursByTravelSlug($filters, $paginate = 10): mixed
     {
-        // Eager load travel related to the tours    
-        $tours = $this->whereHas('travel', function($query) use ($filters) {
+        // Eager load travel related to the tours
+        $tours = $this->whereHas('travel', function ($query) use ($filters) {
             return $query->where('slug', $filters['slug']);
         })->where(function ($query) use ($filters) {
             // Apply filters
-            if (isset($filters['priceFrom']) && isset($filters['priceTo'])) {
-                $query->whereBetween('price', [($filters['priceFrom'] * 100), ($filters['priceTo'] * 100)]); // Convert to database format
-            }
+            $query->when(isset($filters['priceFrom']) && isset($filters['priceTo']), function ($query) use ($filters) {
+                $query->whereBetween('price', [($filters['priceFrom'] * 100), ($filters['priceTo'] * 100)]);
+            });
 
-            if (isset($filters['dateFrom'])) {
+            $query->when(isset($filters['dateFrom']), function ($query) use ($filters) {
                 $query->where('startDate', '>=', $filters['dateFrom']);
-            }
+            });
 
-            if (isset($filters['dateTo'])) {
+            $query->when(isset($filters['dateTo']), function ($query) use ($filters) {
                 $query->where('endDate', '<=', $filters['dateTo']);
-            }
+            });
         });
 
         if (! $tours) {
@@ -64,10 +71,13 @@ class Tour extends Model
         }
 
         return $tours->orderBy('price', isset($filters['sortByPrice']) ? $filters['sortByPrice'] : 'asc')
-                     ->orderBy('startDate', 'asc')
-                    ->paginate($paginate);
+            ->orderBy('startDate', 'asc')
+            ->paginate($paginate);
     }
 
+    /**
+     * Set the price attribute
+     */
     public function getPriceAttribute($value)
     {
         return $value / 100;
