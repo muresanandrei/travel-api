@@ -67,4 +67,42 @@ class Travel extends Model
     {
         return $this->hasMany(Tour::class, 'travelId');
     }
+
+    /**
+     * Get paginated tours by travel slug
+     *
+     * @param array $filters
+     * @return \Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getPaginatedToursBySlug($filters)
+    {
+        // Eager load tours related to the travel
+        $travel = $this->whereHas('tours', function ($query) use ($filters) {
+            // Apply filters
+            if (isset($filters['priceFrom']) && isset($filters['priceTo'])) {
+
+                $query->whereBetween('price', [($filters['priceFrom'] * 100), ($filters['priceTo'] * 100)]); // Convert to database format
+            }
+
+            if (isset($filters['dateFrom'])) {
+                $query->whereDate('startDate', '>=', $filters['dateFrom']);
+            }
+
+            if (isset($filters['dateTo'])) {
+                $query->whereDate('endDate', '<=', $filters['dateTo']);
+            }
+
+            // Apply sorting
+            $query->orderBy('price', isset($filters['sortByPrice']) ? $filters['sortByPrice'] : 'asc')
+                  ->orderBy('startDate', 'asc');
+        })
+            ->where('slug', $filters['slug'])
+            ->first();
+
+        if (!$travel) {
+            return []; // Return empty array if travel with the provided slug is not found
+        }
+       
+        return $travel->tours()->paginate(10);
+    }
 }

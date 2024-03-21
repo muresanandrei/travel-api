@@ -43,4 +43,9 @@ class Tour extends Model
     {
         $this->attributes['price'] = $value * 100;
     }
+
+    public function getPriceAttribute($value)
+    {
+        return $value / 100;
+    }
 }
