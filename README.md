@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Travel Api Description
+## Travel API Description
 
-Api is using laravel 11 and sanctum for authentication.
+API is using laravel 11 and sanctum for authentication.
 For linting Duster is used.
 
 Duster is a tool that brings together Laravel Pint, PHP_CodeSniffer, PHP-CS-Fixer, and Tighten's Laravel-specific lints in Tlint to provide a powerful and comprehensive linting and fixing toolset for Laravel apps.
@@ -34,7 +34,7 @@ To fix entire codebase: ./vendor/bin/duster fix
 ## ROLES
 Roles are done using Gate and the user access methods are located in Providers\AuthServiceProvider
 
-## Api data and users
+## API data and users
 Migrations will generate 2 users:
 
 admin@travel.com (admin) password: 12345678
