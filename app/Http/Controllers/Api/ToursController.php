@@ -13,13 +13,13 @@ class ToursController extends Controller
 
     public function __construct(Travel $travel)
     {
-       $this->travel = $travel;
+        $this->travel = $travel;
     }
 
-    public function index(ToursPaginatedRequest $request) : JsonResponse
+    public function index(ToursPaginatedRequest $request): JsonResponse
     {
         $filters = $request->all();
-       
+
         $tours = $this->travel->getPaginatedToursBySlug($filters);
 
         return response()->json(['tours' => $tours], 200);

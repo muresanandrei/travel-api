@@ -19,7 +19,7 @@ class ToursPaginatedRequest extends FormRequest
             'priceFrom' => 'numeric|min:0|max:9999999',
             'priceTo' => 'numeric|min:0|max:9999999',
             'slug' => 'required|string|exists:travels,slug',
-            'sortByPrice' => 'nullable|in:asc,desc',
+            'sortByPrice' => 'nullable|in:ASC,DESC',
         ];
     }
 }

@@ -28,7 +28,6 @@ Route::group(['namespace' => 'App\Http\Controllers\Api'], function () {
     Route::get('tours', 'ToursController@index');
 });
 
-
 //Auth Routes
 Route::group(['namespace' => 'App\Http\Controllers\Api\Auth'], function () {
     Route::post('login', 'LoginController@login')->name('login')->name('api.login');

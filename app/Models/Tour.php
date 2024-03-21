@@ -41,7 +41,7 @@ class Tour extends Model
 
     public function setPriceAttribute($value)
     {
-        $this->attributes['price'] = $value * 100;
+        $this->attributes['price'] = $value * 10;
     }
 
     public function getPriceAttribute($value)

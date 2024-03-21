@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
@@ -71,38 +72,35 @@ class Travel extends Model
     /**
      * Get paginated tours by travel slug
      *
-     * @param array $filters
+     * @param  array  $filters
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPaginatedToursBySlug($filters)
+    public function getPaginatedToursBySlug($filters, $paginate = 10)
     {
         // Eager load tours related to the travel
-        $travel = $this->whereHas('tours', function ($query) use ($filters) {
+        $travelId = $this->where('slug', $filters['slug'])->pluck('id')->first();
+
+        $tours = DB::table('tours')->where('travelId', $travelId)->where(function ($query) use ($filters) {
             // Apply filters
             if (isset($filters['priceFrom']) && isset($filters['priceTo'])) {
-
                 $query->whereBetween('price', [($filters['priceFrom'] * 100), ($filters['priceTo'] * 100)]); // Convert to database format
             }
 
             if (isset($filters['dateFrom'])) {
-                $query->whereDate('startDate', '>=', $filters['dateFrom']);
+                $query->where('startDate', '>=', $filters['dateFrom']);
             }
 
             if (isset($filters['dateTo'])) {
-                $query->whereDate('endDate', '<=', $filters['dateTo']);
+                $query->where('endDate', '<=', $filters['dateTo']);
             }
+        });
 
-            // Apply sorting
-            $query->orderBy('price', isset($filters['sortByPrice']) ? $filters['sortByPrice'] : 'asc')
-                  ->orderBy('startDate', 'asc');
-        })
-            ->where('slug', $filters['slug'])
-            ->first();
-
-        if (!$travel) {
+        if (! $tours) {
             return []; // Return empty array if travel with the provided slug is not found
         }
-       
-        return $travel->tours()->paginate(10);
+
+        return $tours->orderBy('price', isset($filters['sortByPrice']) ? $filters['sortByPrice'] : 'asc')
+            ->orderBy('startDate', 'asc')
+            ->paginate($paginate);
     }
 }
