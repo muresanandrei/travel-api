@@ -11,8 +11,8 @@ class TravelController extends Controller
 {
     public function store(TravelRequest $request): JsonResponse
     {
-        $travelFields = $request->safe()->only(['isPublic', 'name', 'description', 'numberOfDays', 'moods']);
-
+        $travelFields = $request->only(['isPublic', 'name', 'description', 'numberOfDays', 'moods']);
+        
         $travel = Travel::create($travelFields);
 
         return response()->json(['travel' => $travel], 201);

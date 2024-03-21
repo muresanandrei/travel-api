@@ -11,7 +11,7 @@ class TourController extends Controller
 {
     public function store(TourRequest $request): JsonResponse
     {
-        $tourFields = $request->safe()->only(['name', 'startDate', 'endDate', 'price', 'travelId']);
+        $tourFields = $request->only(['name', 'startDate', 'endDate', 'price', 'travelId']);
 
         $travel = Travel::findOrFail($tourFields['travelId']);
         $tour = $travel->tours()->create($tourFields);
