@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Admin;
+namespace App\Http\Controllers\Api\Editor;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TravelRequest;
@@ -9,12 +9,12 @@ use Illuminate\Http\JsonResponse;
 
 class TravelController extends Controller
 {
-    public function store(TravelRequest $request): JsonResponse
+    public function update(TravelRequest $request, $travelId): JsonResponse
     {
+        $travel = Travel::findOrFail($travelId);
         $travelFields = $request->safe()->only(['isPublic', 'name', 'description', 'numberOfDays', 'moods']);
+        $travel->update($travelFields);
 
-        $travel = Travel::create($travelFields);
-
-        return response()->json(['travel' => $travel], 201);
+        return response()->json(['success' => true], 200);
     }
 }

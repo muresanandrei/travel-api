@@ -38,4 +38,9 @@ class Tour extends Model
     {
         return $this->belongsTo(Travel::class);
     }
+
+    public function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = $value * 100;
+    }
 }

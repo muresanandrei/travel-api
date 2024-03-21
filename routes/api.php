@@ -10,7 +10,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
         //Editor endpoints
         Route::group(['prefix' => 'editor', 'namespace' => 'Editor'], function () {
-            Route::put('travel/{id}', 'TravelController@update')->middleware('can:update-travel');
+            Route::post('travel/{travelId}/update', 'TravelController@update')->middleware('can:update-travel');
         });
 
         //Admin endpoints
