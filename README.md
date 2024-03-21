@@ -15,7 +15,7 @@ For linting Duster is used.
 Duster is a tool that brings together Laravel Pint, PHP_CodeSniffer, PHP-CS-Fixer, and Tighten's Laravel-specific lints in Tlint to provide a powerful and comprehensive linting and fixing toolset for Laravel apps.
 
 ## ENV KEYS
-Check the .env.example i copied my own keys you can follow that structure
+Check the .env.example I've copied my own keys you can follow that structure
 
 ## Instalation
 
