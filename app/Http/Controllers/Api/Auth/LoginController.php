@@ -19,9 +19,10 @@ class LoginController extends Controller
         try {
             // attempt to verify the credentials and create a token for the user
             if (Auth::attempt($credentials)) {
-                $cookie = cookie('at', auth()->user()->createToken($request->device_type ?? 'web')->plainTextToken, 5440, '/', false, true, false, false, null);
+                $token = auth()->user()->createToken($request->device_type ?? 'web')->plainTextToken;
+                $cookie = cookie('at', $token, 5440, '/', false, true, false, false, null);
 
-                return response()->json([], 200)->withCookie($cookie);
+                return response()->json(['success' => true, 'token' => $token], 200)->withCookie($cookie);
             } else {
                 return response()->json(['success' => false, 'message' => 'Can\'t find an account with these credentials.'], 401);
             }

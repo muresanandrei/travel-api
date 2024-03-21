@@ -21,11 +21,18 @@ class AuthRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['string', 'max:191', 'nullable'],
             'roles' => ['array', 'nullable'],
-            'email' => ['required', 'unique:users,email', 'email', 'max:191'],
+            'email' => ['required', 'email', 'max:191'],
             'password' => ['required', 'max:100'],
         ];
+
+        if ($this->route()->getName() === 'auth.register') {
+            // Apply the unique rule only for registration
+            $rules['email'][] = 'unique:users,email';
+        }
+
+        return $rules;
     }
 }

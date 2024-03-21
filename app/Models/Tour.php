@@ -30,6 +30,8 @@ class Tour extends Model
      */
     public $timestamps = true;
 
+    protected $table = 'tours';
+
     protected $fillable = ['travelId', 'name', 'startDate', 'endDate', 'price'];
 
     public function travel()

@@ -20,17 +20,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //admin can only create travel
+        //only admin can create travels
         Gate::define('create-travel', function ($user) {
-            return $user->hasRole('admin');
+            return $user->roles->contains('name', 'admin');
         });
-        //admin can only create tour
+        //only admin can create tours
         Gate::define('create-tour', function ($user) {
-            return $user->hasRole('admin');
+            return $user->roles->contains('name', 'admin');
         });
-        //editor can only update their own travel
-        Gate::define('update-travel', function ($user, $travel) {
-            return $user->hasRole('editor') && $user->id === $travel->user_id;
+        //editor can only update travels
+        Gate::define('update-travel', function ($user) {
+            return $user->roles->contains('name', 'editor');
         });
     }
 }
